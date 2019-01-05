@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1006518722188",
+    "firebase_url": "https://diaristas-c0ea5.firebaseio.com",
+    "project_id": "diaristas-c0ea5",
+    "storage_bucket": "diaristas-c0ea5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006518722188:android:c1959ff2479fa6ea",
+        "android_client_info": {
+          "package_name": "com.example.ferreira.diaristas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006518722188-j6mb0vndqio559mbbm6bthg7j586dbme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ferreira.diaristas",
+            "certificate_hash": "305b9c713fb141d95eaba262c710e957aefbde41"
+          }
+        },
+        {
+          "client_id": "1006518722188-3itj2ehnfmhj0hq7239np6tm0lp07a2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChyqh4-nv5vZ22cUFhf5re8Sl2F5zqMec"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006518722188-3itj2ehnfmhj0hq7239np6tm0lp07a2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
