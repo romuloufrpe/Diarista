@@ -28,6 +28,7 @@ import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.twisty.interlude.lib.IndicatorType
 import com.twisty.interlude.lib.Interlude
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_sing_in.*
 import java.util.*
 
@@ -40,6 +41,7 @@ class SingInActivity : AppCompatActivity() {
     val RC_SIGN_IN = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    lateinit var alertDialog: android.app.AlertDialog
 
     //construct
     var interlude: Interlude = Interlude()
@@ -50,12 +52,13 @@ class SingInActivity : AppCompatActivity() {
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sing_in)
         configureGoogleSignIn()
         setupUI()
-//        showDialog()
+        showDialog()
         firebaseAuth = FirebaseAuth.getInstance()
 
         val _singUpLink = findViewById<View>(R.id.link_singup) as TextView
@@ -64,7 +67,6 @@ class SingInActivity : AppCompatActivity() {
 
         _buttonLogin.setOnClickListener(View.OnClickListener {
             view -> login()
-            login_pogress.visibility = ProgressBar.VISIBLE
         })
 
 
@@ -76,31 +78,11 @@ class SingInActivity : AppCompatActivity() {
     }
 
     private fun showDialog(){
-
-
-        //config
-        with(interlude) {
-            dim = 0.1F                                            //dialog弹出时背景变暗程度
-            indicatorColorResource = android.R.color.darker_gray  //progress的颜色
-            backGroundColorResource = android.R.color.transparent      //dialog的背景 color或者drawable
-            indicatorType = IndicatorType.BallPulseIndicator      //progress的类型
-            isCancelable = true                                   //是否可以取消
-            canceledOnTouchOutside = false                        //点击界外是否取消
-            cancelCallback = {
-                Log.i(localClassName, "Cancel")
-            }                                                     //取消回调
-            dismissCallback = {
-                Log.i(localClassName, "Dismiss")
-            }                                                     //消失回调,cancel也会执行dismiss
-        }
-
-//show
-        interlude.isShowing()
-
-
-//dismiss
-        interlude.dismiss()
-
+        alertDialog = SpotsDialog.Builder()
+            .setContext(this)
+            .setMessage("Por favor aguarde...")
+            .setCancelable(false)
+            .build()
     }
 
     override fun onStart() {
@@ -150,11 +132,14 @@ class SingInActivity : AppCompatActivity() {
 
     private fun firebaseAuthGoogle(account: GoogleSignInAccount){
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        alertDialog.show()
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
             if (it.isSuccessful){
                 startActivity(Intent(this, MainActivity::class.java))
+                alertDialog.dismiss()
             }else {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+
             }
         }
     }
@@ -166,12 +151,13 @@ class SingInActivity : AppCompatActivity() {
         var password = passwordText.text.toString()
 
         if (!email.isEmpty() && !password.isEmpty()){
+            alertDialog.show()
             firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, OnCompleteListener<AuthResult> {
                 task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                         startActivity(Intent(this, MainActivity::class.java))
-                        login_pogress.visibility = ProgressBar.GONE
+                        alertDialog.dismiss()
 
                 }else{
                     Toast.makeText(this, "Erro ao fazer Loggin", Toast.LENGTH_LONG).show()

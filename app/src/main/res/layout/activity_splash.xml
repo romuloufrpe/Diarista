@@ -6,14 +6,12 @@
 
 
 
-    <TextView
+    <ImageView
             android:id="@+id/fullscreen_content"
+            android:src="@drawable/titulo_arruma_aqui"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:keepScreenOn="true"
-            android:text="Bem Vindo"
-            android:textColor="#000"
-            android:textSize="25sp" />
+            android:keepScreenOn="true"/>
 
 </FrameLayout>

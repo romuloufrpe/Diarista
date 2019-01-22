@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.ferreira.diaristas"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -56,5 +56,9 @@ dependencies {
 
     implementation 'com.twisty:interlude:1.0.2'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    //COSTUM
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+    implementation 'com.github.Yalantis:OfficialFoldingTabBar.Android:v0.9'
+
 
 }

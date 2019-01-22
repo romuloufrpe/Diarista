@@ -1,6 +1,7 @@
 package com.example.ferreira.diaristas
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_sing_up.*
 import java.util.*
@@ -32,10 +34,13 @@ class SingUpActivity : AppCompatActivity() {
     private val mAuth = FirebaseAuth.getInstance()
     private val mDataBase =  FirebaseDatabase.getInstance()
     private val myRef = mDataBase.getReference()
+    lateinit var alertDialog: android.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sing_up)
+
+        showDialog()
 
         val _btnSingUp = findViewById<View>(R.id.btn_signup) as Button
         val _singInLink = findViewById<View>(R.id.link_login) as TextView
@@ -59,6 +64,17 @@ class SingUpActivity : AppCompatActivity() {
     }
 
     var selectedPhotoUri: Uri? = null
+
+    private fun showDialog(){
+
+        alertDialog = SpotsDialog.Builder()
+            .setContext(this)
+            .setMessage("Concluindo Cadastro")
+            .setCancelable(false)
+            .build()
+
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -104,12 +120,15 @@ class SingUpActivity : AppCompatActivity() {
 
 
         if(!email.isEmpty() && !password.isEmpty() && !name.isEmpty()) {
+            alertDialog.show()
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener { task ->
+
                 if(task.isSuccessful) {
                     val user = mAuth.currentUser
                     val uid = user!!.uid
                     uploadImageToFirebaseStorage()
                     startActivity(Intent(this, MainActivity::class.java))
+                    alertDialog.dismiss()
                     Toast.makeText(this, "Sucesso!! :)", Toast.LENGTH_LONG).show()
                 }else {
                     Toast.makeText(this, "Erro ao registrar tente novamente :(", Toast.LENGTH_LONG).show()
@@ -137,6 +156,7 @@ class SingUpActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
         val user = User(uid, input_name.text.toString(), profileImageUrl)
+        alertDialog.show()
 
         ref.setValue(user)
             .addOnSuccessListener {

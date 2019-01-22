@@ -13,6 +13,7 @@
             android:paddingTop="56dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
+
         <ProgressBar
                 android:id="@+id/login_pogress"
                 android:layout_width="match_parent"
@@ -21,7 +22,7 @@
 
 
         <ImageView
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/titulo_arruma_aqui"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
                 android:layout_marginBottom="24dp"
@@ -54,7 +55,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:inputType="textPassword"
-                    android:hint="Password"/>
+                    android:hint="Senha"/>
 
         <Button
                 android:id="@+id/btn_login"
